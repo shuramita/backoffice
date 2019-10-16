@@ -1,0 +1,48 @@
+.dashboard {
+	.header {
+	  margin-bottom: 15px;
+		.period , .actions {
+		  display: inline-block;
+		  a {
+			&:hover {
+			  color: $white;
+			}
+		  }
+		}
+	    .period {
+		  background-color: #fff;
+		  padding: 5px 10px;
+		  .btn-group {
+			border: none;
+			cursor: pointer;
+			&.year {
+			  border-right: 1px solid #cdcdcd;
+			  padding-right: 10px;
+			}
+			&.month {
+			  padding-left: 10px;
+			}
+			.dropdown-toggle {
+			  background: $white;
+			  border: none;
+			  padding: 5px 10px;
+			}
+		  }
+
+		}
+	}
+  	.row-dashboard-record {
+	  margin-bottom: 25px;
+	  img {
+		width: 100%;
+	  }
+	}
+    .red-recent-contract {
+	  margin-bottom: 25px;
+	  padding-bottom: 35px;
+	  img {
+		width: 100%;
+	  }
+	}
+
+}

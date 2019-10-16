@@ -1,0 +1,59 @@
+#walkThrough {
+  .modal-dialog {
+    .modal-content {
+      margin-top: 50%;
+      width: 580px;
+      @include media('screen','<small'){
+       width: 100%;
+      }
+    }
+  }
+  .carousel {
+    .carousel-indicators {
+      bottom: -35px;
+    }
+    .carousel-inner {
+      .carousel-item {
+        height: 400px;
+        @include media('screen','<small'){
+          height: 200px;
+        }
+        img {
+          display: block;
+          width: 100%;
+        }
+        .carousel-caption, .d-md-block {
+          padding: 25px 15px 15px;
+          text-align: center;
+          color: #222;
+          h3 {
+            font-weight: 500;
+            font-size: 16px;
+          }
+        }
+      }
+    }
+    .carousel-control-prev , .carousel-control-next {
+      opacity: 1;
+      .circle {
+        border-radius: 15px;
+        background: #fff;
+        padding: 5px;
+        &:hover {
+          background: #7541bf;
+          color: #fff;
+          svg {
+            fill: $white;
+          }
+        }
+      }
+    }
+
+    .carousel-control-prev {
+      left: -70px;
+    }
+    .carousel-control-next {
+      right: -70px;
+    }
+  }
+}

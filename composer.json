@@ -1,0 +1,26 @@
+{
+    "name": "shura/backoffice",
+    "description": "Description",
+    "type": "library",
+    "namespace":"Shura",
+    "authors": [
+        {
+            "name": "Tam Nguyen",
+            "email": "minhtamtt@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Shura\\BackOffice\\": "src/"
+        },
+        "files": ["src/Helpers/Helper.php"]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Shura\\BackOffice\\BackOfficeServiceProvider",
+                "Shura\\BackOffice\\ComposerServiceProvider"
+            ]
+        }
+    }
+}

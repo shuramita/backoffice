@@ -1,0 +1,15 @@
+{
+  "name":"backoffice",
+  "version": "0.2.8",
+  "author":"minhtamtt@gmail.com",
+  "main": "js/backoffice.js",
+  "sass": "scss/backoffice.scss",
+  "private": true,
+  "files": [
+    "js/**/*.js",
+    "scss/**/*.scss"
+  ],
+  "scripts": {},
+  "devDependencies": {},
+  "dependencies": {}
+}

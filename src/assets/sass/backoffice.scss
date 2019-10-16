@@ -1,0 +1,11 @@
+@import "~@sass/_variables";
+@import "~@sass/mixins";
+@import "./partials/_nav";
+@import "./partials/layout";
+//@import "~mdbootstrap/scss/mdb";
+@import "./partials/dashboard";
+@import "./dashboard/walk-though";
+@import "./partials/view-as";
+.backoffice {
+
+}
