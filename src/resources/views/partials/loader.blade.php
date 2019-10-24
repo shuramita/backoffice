@@ -14,7 +14,7 @@
          top: 47%;
          bottom: 0;
          left: 47%;">
-        {{@svg_image('loader')}}
+        {{@svg_image('vendor.backoffice.loader')}}
     </div>
 
 </div>

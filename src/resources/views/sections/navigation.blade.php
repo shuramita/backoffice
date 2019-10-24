@@ -1,7 +1,7 @@
 <nav id="sidebar" class="active">
     <div class="sidebar-header">
         <span id="sidebarCollapse">
-            {{@svg_image('dark')}}
+            {{@svg_image('vendor.backoffice.dark')}}
         </span>
     </div>
     <ul class="list-unstyled components">

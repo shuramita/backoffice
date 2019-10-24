@@ -46,9 +46,9 @@ class BackOfficeServiceProvider extends ServiceProvider
 
     }
     public function registerAdminNavigator(){
-//            app('AdminNavigator')->registerNavigator(
-//                'backoffice', new Item('BackOffice Manager','backoffice','admin','fa-newspaper')
-//            );
+            app('AdminNavigator')->registerNavigator(
+                'backoffice', new Item('BackOffice Manager','backoffice','admin','fa-newspaper')
+            );
 
             /**
              * // example for register sub Nav

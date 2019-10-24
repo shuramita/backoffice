@@ -16,7 +16,7 @@ class Navigator
             'dashboard'=>[
                 'first'=>new Item('Dashboard','backoffice.dashboard',
                     ['admin','manager','maker'],
-                    ['type'=>'svg','file'=>'bo-home','mdi'=>'home']
+                    ['type'=>'svg','file'=>'vendor.backoffice.bo-home','mdi'=>'home']
                 ),
                 'has_sub'=>false,
                 'order'=>0
