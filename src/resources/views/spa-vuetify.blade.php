@@ -11,39 +11,24 @@
         <meta name="api-token" content="{{Auth::user()->api_token}}">
     @endif
     <title>RealEstateDoc Framework</title>
-{{--    @include('partials.vendor-bundle')--}}
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{--    @include('partials.vendor-bundle')--}}
+<!-- Scripts -->
+{{--    <script src="{{ asset('js/app.js') }}" defer></script>--}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <!-- Styles -->
 
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+{{--    <link href="{{ asset('css/app.css') }}" rel="stylesheet">--}}
     @stack('scripts')
     @stack('styles')
     @include('partials.ga')
 
 </head>
 <body class="@yield('body_class')">
-<div id="app">
-
-    @include('BackOffice::sections.navigation')
-    <div id="content" class="content">
-
-        @include('BackOffice::sections.header')
-        <div class="main">
-            @yield('content')
-        </div>
-        @include('BackOffice::sections.footer')
-        {{--@include('BackOffice::partials.view-as-tenant')--}}
-
-    </div>
-
-</div>
-@include('BackOffice::partials.loader')
+<div id="app"></div>
 {{--Scripts--}}
-<script src="{{ mix('/js/backoffice/backoffice.js') }}" defer></script>
+<script src="{{ mix('/js/backoffice/backoffice.vuetify.js') }}" defer></script>
 @yield('scripts')
 
 {{--Styles--}}
