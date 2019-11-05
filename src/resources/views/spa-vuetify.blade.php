@@ -28,11 +28,11 @@
 <body class="@yield('body_class')">
 <div id="app"></div>
 {{--Scripts--}}
-<script src="{{ mix('/js/backoffice/backoffice.vuetify.js') }}" defer></script>
+<script src="{{ mix('js/backoffice/backoffice.vuetify.js') }}" defer></script>
 @yield('scripts')
 
 {{--Styles--}}
 @yield('styles')
-<link href="{{ mix('/css/backoffice/backoffice.css') }}" rel="stylesheet">
+<link href="{{ mix('css/backoffice/backoffice.css') }}" rel="stylesheet">
 </body>
 </html>

@@ -7,6 +7,11 @@
     >
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <span class="title ml-3 mr-5">FORE&nbsp;<span class="font-weight-light">Gateway</span></span>
+      <v-btn
+              icon
+              @click.stop="mini = !mini"
+      ><v-icon>navigate_before</v-icon>
+      </v-btn>
       <div class="flex-grow-1"></div>
       <v-btn text v-if="isAuthenticated" v-on:click="logOut">
         <v-icon>person</v-icon> Logout
@@ -17,11 +22,12 @@
             v-model="drawer"
             app
             clipped
-            color="grey lighten-4"
+            color="white lighten-4"
+            :mini-variant.sync="mini"
     >
       <v-list
               dense
-              class="grey lighten-4"
+              class="white lighten-4"
       >
         <template v-for="(item, i) in items">
           <v-row
@@ -53,14 +59,14 @@
           <v-list-item
                   v-else
                   :key="i"
-                  :to="item.link"
+                  :to="navigator.getUri(item.link)"
           >
             <v-list-item-action>
-              <v-icon >{{ item.icon }}</v-icon>
+              <v-icon >{{ item.icon.mdi }}</v-icon>
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title class="grey--text">
-                {{ item.text }}
+                {{ item.name }}
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -71,9 +77,10 @@
     <v-content>
       <v-container
               fluid
-              class="grey lighten-4"
+              class="white lighten-4"
       >
         <router-view></router-view>
+
       </v-container>
     </v-content>
   </v-app>
@@ -81,34 +88,27 @@
 
 <script>
   import Auth from './services/Auth';
-
+  import Navigator from './services/Navigator';
   export default {
     props: {
       source: String,
     },
     data: () => ({
-      drawer: null,
-      items: [
-        { icon: 'person', text: 'Users', link:'/users' },
-        { icon: 'apps', text: 'Apps' , link:'/applications'},
-        { icon: 'vpn_key', text: 'Credentials', link:'/credentials' },
-        { icon: 'https', text: 'Scopes', link:'/scopes' },
-        { icon: 'polymer', text: 'Schemas',link:'/schemas' },
-        { icon: 'list', text: 'Policies' },
-        { icon: 'beenhere', text: 'Service Endpoints',link:'/service-endpoints' },
-        { icon: 'text_rotation_none', text: 'API Endpoints',link:'/api-endpoints' },
-        { icon: 'trending_down', text: 'Pipelines', link:'/pipelines' },
-      ],
+      drawer: true,
+      mini: true,
+      navigator:Navigator,
+      items: Navigator.getNav(),
       isAuthenticated:false,
-
     }),
     mounted() {
-      this.isAuthenticated = !!sessionStorage.getItem(Auth.EG_API_KEY);
+      Auth.login();
+      this.isAuthenticated = !!sessionStorage.getItem(Auth.API_KEY);
       this.$event.$on('authentication-changed',(status)=>{
         this.isAuthenticated = status;
       })
     },
     methods: {
+
       logOut(){
         Auth.logOut();
         this.$router.push({name:Auth.LOGIN_ROUTE});
