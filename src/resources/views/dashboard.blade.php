@@ -1,4 +1,4 @@
-@extends('BackOffice::layouts.app')
+@extends('BackOffice::spa-vuetify')
 @section('body_class','backoffice dashboard')
 @section('content')
     <div class="dashboard">

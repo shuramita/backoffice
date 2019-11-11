@@ -13,6 +13,9 @@ export default class Auth {
         sessionStorage.setItem(Auth.API_KEY, api_token.content);
     }
 
+    static isAuthenticated(){
+        return !!sessionStorage.getItem(Auth.API_KEY);
+    }
     static getUser() {
         if (sessionStorage.getItem(Auth.API_KEY))
             return sessionStorage.getItem(Auth.API_KEY) || false;

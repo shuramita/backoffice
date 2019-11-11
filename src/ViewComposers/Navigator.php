@@ -2,6 +2,7 @@
 
 namespace Shura\BackOffice\ViewComposers;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 use App\User;
 
@@ -13,62 +14,85 @@ class Navigator
     public function __construct()
     {
         $this->items = [
-            'dashboard'=>[
-                'first'=>new Item('Dashboard','backoffice.dashboard',
-                    ['admin','manager','maker'],
-                    ['type'=>'svg','file'=>'vendor.backoffice.bo-home','mdi'=>'home']
+            'dashboard' => [
+                'first' => new Item('Dashboard', 'backoffice.dashboard',
+                    ['admin', 'manager', 'maker'],
+                    ['type' => 'svg', 'file' => 'vendor.backoffice.bo-home', 'mdi' => 'home']
                 ),
-                'has_sub'=>false,
-                'order'=>0
+                'hasSubItems' => false,
+                'order' => 0
             ]
         ];
     }
 
 
-    public function registerNavigator($key,$item,$has_sub=false,$sub = [],$order=999){
+    public function registerNavigator($key, $item, $hasSubItem = false, $subItems = [], $order = 999)
+    {
 
         $this->items[$key] = [
-            'first'=>$item,
-            'has_sub'=>$has_sub,
-            'sub'=>$sub,
-            'order'=>$order
+            'first' => $item,
+            'hasSubItems' => $hasSubItem,
+            'subItems' => $subItems,
+            'order' => $order
         ];
     }
 
-    public function registerSubNavigator($key,$item){
+    public function registerSubNavigator($key, $item)
+    {
 
-        $this->items[$key]['has_sub'] = true;
-        $this->items[$key]['sub'][] = $item;
+        $this->items[$key]['hasSubItems'] = true;
+        $this->items[$key]['subItems'][] = $item;
 
     }
 
-    public function getItems(){
+    public function getItems()
+    {
         return $this->items;
     }
 
-    public function filterByRole(User $user){
-
-        $items = collect($this->items)->sortBy('order')->map(function($item) use ($user) {
-            $first =  $item['first'];
-
-            if(isset($first->icon)) {
-                if(isset($first->icon['type']) && $first->icon['type'] == 'svg') $first->icon['svg'] = $this->buildIconSvg($first->icon['file']);
+    public function filterByRole(User $user)
+    {
+        $items = collect($this->items)->sortBy('order')->map(function ($item) use ($user) {
+            $first = $item['first'];
+//            $nav_item = new \stdClass();
+            $nav_item = $this->buildItem($user, $first);
+            $nav_item['hasSubItems'] = $item['hasSubItems'];
+            if ($item['hasSubItems']) {
+                $nav_item['subItems'] =  collect($item['subItems'])
+                    ->sortBy('order')
+                    ->map(function ($item) use ($user) {
+                        return $this->buildItem($user, $item);
+                    });
             }
-            if($user->is($first->permission)) {
-                $nav_item = [
-                    'link'=>route($first->route),
-                    'name'=>$first->title,
-                    'icon'=>$first->icon,
-                    'order'=>$item->order ?? 999,
-                ];
-                return $nav_item;
-            }
-        })->filter(function($value,$key){
+            return $nav_item;
+        })->filter(function ($value, $key) {
             return !empty($value);
         });
         return $items;
     }
-    public function buildIconSvg($name){
+
+    private function buildItem(User $user, Item $item)
+    {
+
+        if (isset($item->icon)) {
+            if (isset($item->icon['type']) && $item->icon['type'] == 'svg') $item->icon['svg'] = $this->buildIconSvg($item->icon['file']);
+        }
+        if ($user->is($item->permission)) {
+//            var_dump($item->params);
+            $nav_item = [
+                'link' => route($item->route,$item->params),
+                'name' => $item->title,
+                'icon' => $item->icon,
+                'order' => $item->order ?? 999,
+                'meta'=> $item->params ?? new \stdClass(),
+                'routeName'=>$item->route
+            ];
+            return $nav_item;
+        }
+    }
+
+    public function buildIconSvg($name)
+    {
         return svg_image($name)->renderInline();
     }
 }

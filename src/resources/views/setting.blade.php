@@ -1,4 +1,4 @@
-@extends('BackOffice::layouts.app')
+@extends('BackOffice::spa-vuetifyy')
 @section('body_class','backoffice setting')
 @section('content')
     <div class="setting">
