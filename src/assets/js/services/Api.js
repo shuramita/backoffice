@@ -1,4 +1,4 @@
-import {BaseApi} from '@components/BaseApi';
+import {BaseApi} from '@js/services/BaseApi';
 
 export class Api extends BaseApi{
 

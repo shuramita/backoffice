@@ -9,13 +9,28 @@ Vue.use(Vuetify);
 export default new Vuetify({
     icons: {
         iconfont: 'mdiSvg', // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4'
-    }, theme: {
-        light: {
-            primary: '#3f51b5',
-            secondary: '#b0bec5',
-            accent: '#8c9eff',
-            error: '#b71c1c',
-        },
-        dark:false
+    },
+    theme: {
+        dark: false,
+        themes: {
+            dark: {
+                primary: '#21CFF3',
+                secondary: '#070293',
+                accent: '#FF4081',
+                success: '#4CAF50',
+                info: '#2196F3',
+                warning: '#FB8C00',
+                error: '#FF5252'
+            },
+            light: {
+                primary: '#723bd4',
+                secondary: '#6d6d6d',
+                accent: '#82B1FF',
+                error: '#FF5252',
+                info: '#2196F3',
+                success: '#4CAF50',
+                warning: '#FFC107',
+            }
+        }
     }
 });
