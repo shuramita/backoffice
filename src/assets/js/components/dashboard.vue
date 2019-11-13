@@ -10,7 +10,6 @@
                     Edit Dashboard
                 </v-btn>
             </v-card-actions>
-
         </v-card>
         <v-row>
             <v-col>
@@ -72,19 +71,24 @@
                 </v-card>
             </v-col>
         </v-row>
+        <v-row>
+            <v-col v-for="component in components" :key="component.name" class="mx-5">
+                <component v-bind:is="component"></component>
+            </v-col>
+        </v-row>
     </div>
 
 </template>
 
 <script>
-
     import breadcrumb from "./breadcrumb";
-
+    import serviceProvider from '../services/ServiceProvider';
     export default {
         components: {
             'breadcrumb': breadcrumb
         },
         data: () => ({
+            components: serviceProvider.loadDashboardComponents(),
             gradient: ['#f72047', '#ffd200', '#1feaea'],
             value: [
                 423,
@@ -95,11 +99,11 @@
                 610,
                 760,
             ],
-        }),
+        })
     }
 </script>
 <style>
-    .notification {
-        background: grey;
-    }
+    /*.notification {*/
+    /*    background: grey;*/
+    /*}*/
 </style>

@@ -7,12 +7,12 @@ import Auth from './services/Auth'
 
 // Vue.prototype.axio = axios;
 Vue.prototype.$event = new Vue();
-import Dashboard from './components/Dashboard'
+import dashboard from './components/dashboard'
 import Login from "./components/Login";
 Vue.use(VueRouter)
 const routes = [
     {path: '/backoffice', redirect: {name: 'dashboard'}},
-    {path: '/backoffice/dashboard', component: Dashboard, beforeEnter: Auth.requireAuth, name: 'dashboard'},
+    {path: '/backoffice/dashboard', component: dashboard, beforeEnter: Auth.requireAuth, name: 'dashboard'},
     {path: '/login', component: Login, name: 'login'},
 ];
 
@@ -20,7 +20,7 @@ const router = new VueRouter({
     routes, // short for `routes: routes`
     mode: 'history'
 });
-const packagesRoutes = require.context('@root/public/routers', true, /^.*\.js$/);
+const packagesRoutes = require.context('@root/packages/compiler/cache/routers', true, /^.*\.js$/);
 packagesRoutes.keys().map(key=>{
     router.addRoutes(packagesRoutes(key).default);
 })
