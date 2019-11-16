@@ -2,7 +2,7 @@ import {Api} from "./Api";
 
 export default class NavigatorApi extends Api {
     async getNav() {
-        return this.get('/api/backoffice/navigation')
+        return this.get('/navigation')
             .then(({data}) => {
                 return Promise.resolve(data);
             })
