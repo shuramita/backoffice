@@ -16,7 +16,8 @@ class NavigationController extends Controller
      *
      * */
     function index(Request $request){
-        $items = Navigator::filterByRole($request->user('api'));
+//        $items = Navigator::filterByRole($request->user('api'));
+        $items = Navigator::filterByPermission($request->user('api'));
 
         return $this->jsonResponse($items,'List of Nav Item');
     }

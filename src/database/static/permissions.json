@@ -1,0 +1,7 @@
+[
+  {
+    "name": "Access BackOffice",
+    "slug": "bo::read",
+    "description": "User can access backoffice dashboard"
+  }
+]

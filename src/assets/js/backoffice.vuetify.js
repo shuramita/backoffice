@@ -3,9 +3,7 @@ import vuetify from './plugins/vuetify';
 import App from './App.vue'
 import VueRouter from 'vue-router'
 import Auth from './services/Auth'
-// import axios from 'axios';
 
-// Vue.prototype.axio = axios;
 Vue.prototype.$event = new Vue();
 import dashboard from './components/dashboard'
 import Login from "./components/Login";

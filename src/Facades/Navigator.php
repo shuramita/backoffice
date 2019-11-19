@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static registerNavigator($key, $item, $has_sub = false, $sub = [], $order = 999)
  * @method static registerSubNavigator($key, $item)
  * @method static filterByRole(User $user)
+ * @method static filterByPermission(User $user)
  */
 class Navigator extends Facade
 {

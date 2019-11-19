@@ -4,7 +4,6 @@ export class Api extends BaseApi{
 
     constructor() {
         super();
-        this.service = '/api/backoffice'
+        this.service = '/api/backoffice';
     }
-
 }

@@ -50,9 +50,22 @@
                     fluid
             >
                 <router-view></router-view>
-
+                <v-snackbar
+                        v-model="error.snackbar"
+                        :timeout="error.timeout"
+                        :color="error.color"
+                >
+                    {{ error.text }}
+                    <v-btn
+                            text
+                            @click="error.snackbar = false"
+                    >
+                        Close
+                    </v-btn>
+                </v-snackbar>
             </v-container>
         </v-content>
+
     </v-app>
 </template>
 
@@ -60,7 +73,8 @@
     import Auth from './services/Auth';
     import NavigatorApi from './services/Navigator';
     import Item from './components/nav/Item';
-
+    import Event from './services/EventList';
+    import EventBus from "@js/services/EventBus";
     // import {Dashboard} from '@asset/asset';
     //
     // console.log(Dashboard);
@@ -77,6 +91,12 @@
             items: [],
             navigatorApi: new NavigatorApi(),
             isAuthenticated: false,
+            error: {
+                snackbar: false,
+                timeout: 7000,
+                text: 'Something wrong',
+                color: 'error'
+            }
         }),
         mounted() {
             Auth.login();
@@ -85,13 +105,22 @@
                 this.isAuthenticated = status;
             })
             this.buildNavTree();
+            EventBus.$on(Event.ROOT.HTTP_REQUEST_ERROR, ({data, statusText}) => {
+                this.error.text = data.message || statusText;
+                this.error.snackbar = true;
+                this.error.color = "error"
+            })
+            EventBus.$on(Event.ROOT.ACTION_SUCCESS, ({message}) => {
+                this.error.text = message || 'Processed successful!';
+                this.error.snackbar = true;
+                this.error.color = "success"
+            })
         },
         methods: {
             buildNavTree() {
                 this.navigatorApi.getNav().then(
                     items => {
                         this.items = items;
-
                     }
                 )
             },

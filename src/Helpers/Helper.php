@@ -2,12 +2,9 @@
 
 namespace Shura\BackOffice\Helpers;
 
-
-use Shura\BackOffice\Constants\Option;
-use Shura\BackOffice\Constants\Status;
 use Illuminate\Support\Facades\Storage;
 
-class Helper
+class Helper extends \App\Helpers\Helper
 {
-    
+    public static $static_data_path = __DIR__.'/../database/static/';
 }

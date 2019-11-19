@@ -16,7 +16,7 @@ class Navigator
         $this->items = [
             'dashboard' => [
                 'first' => new Item('Dashboard', 'backoffice.dashboard',
-                    ['admin', 'manager', 'maker'],
+                    ['admin', 'manager', 'maker', 'bo::read'],
                     ['type' => 'svg', 'file' => 'vendor.backoffice.bo-home', 'mdi' => 'home']
                 ),
                 'hasSubItems' => false,
@@ -54,7 +54,6 @@ class Navigator
     {
         $items = collect($this->items)->sortBy('order')->map(function ($item) use ($user) {
             $first = $item['first'];
-//            $nav_item = new \stdClass();
             $nav_item = $this->buildItem($user, $first);
             $nav_item['hasSubItems'] = $item['hasSubItems'];
             if ($item['hasSubItems']) {
@@ -70,7 +69,26 @@ class Navigator
         });
         return $items;
     }
-
+    public function filterByPermission(User $user){
+        $items = collect($this->items)->sortBy('order')->map(function ($item) use ($user) {
+            $first = $item['first'];
+            $nav_item = $this->buildItemByPermission($user, $first);
+            $nav_item['hasSubItems'] = $item['hasSubItems'];
+            if ($item['hasSubItems']) {
+                $nav_item['subItems'] =  collect($item['subItems'])
+                    ->sortBy('order')
+                    ->map(function ($item) use ($user) {
+                        return $this->buildItemByPermission($user, $item);
+                    })->filter(function ($value, $key) {
+                        return !empty($value);
+                    });
+            }
+            return $nav_item;
+        })->filter(function ($value, $key) {
+            return !empty($value) && ( isset($value['link']) || ( $value['hasSubItems'] && count($value['subItems']) > 0));
+        });
+        return $items;
+    }
     private function buildItem(User $user, Item $item)
     {
 
@@ -78,7 +96,30 @@ class Navigator
             if (isset($item->icon['type']) && $item->icon['type'] == 'svg') $item->icon['svg'] = $this->buildIconSvg($item->icon['file']);
         }
         if ($user->is($item->permission)) {
-//            var_dump($item->params);
+            $nav_item = [
+                'link' => route($item->route,$item->params),
+                'name' => $item->title,
+                'icon' => $item->icon,
+                'order' => $item->order ?? 999,
+                'meta'=> $item->params ?? new \stdClass(),
+                'routeName'=>$item->route
+            ];
+            return $nav_item;
+        }
+    }
+    private function buildItemByPermission(User $user, Item $item)
+    {
+
+        if (isset($item->icon)) {
+            if (isset($item->icon['type']) && $item->icon['type'] == 'svg') $item->icon['svg'] = $this->buildIconSvg($item->icon['file']);
+        }
+        $permissions = gettype($item->permission) == 'array' ? $item->permission :  [$item->$item->permission];
+        $hasPermission = collect($permissions)->filter(function($permission) use($user) {
+            if($user->hasPermission($permission) ) {
+                return true;
+            }
+        });
+        if ($hasPermission->count() > 0) {
             $nav_item = [
                 'link' => route($item->route,$item->params),
                 'name' => $item->title,
