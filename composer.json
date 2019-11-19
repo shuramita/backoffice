@@ -1,6 +1,6 @@
 {
     "name": "shura/backoffice",
-    "description": "Description",
+    "description": "Manage your backoffice task",
     "type": "library",
     "namespace":"Shura",
     "authors": [
