@@ -10,6 +10,7 @@ export default class Auth {
 
     static login() {
         let api_token = document.head.querySelector('meta[name="api-token"]');
+        console.log(api_token.content);
         sessionStorage.setItem(Auth.API_KEY, api_token.content);
     }
 

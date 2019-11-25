@@ -15,4 +15,5 @@ class BackOfficeController extends Controller
     public function setting(Request $request){
         return view($this->namespace.'::setting');
     }
+
 }

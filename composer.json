@@ -19,6 +19,7 @@
         "laravel": {
             "providers": [
                 "Shura\\BackOffice\\BackOfficeServiceProvider",
+                "Shura\\BackOffice\\EventServiceProvider",
                 "Shura\\BackOffice\\ComposerServiceProvider"
             ]
         }

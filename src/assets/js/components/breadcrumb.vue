@@ -1,11 +1,11 @@
 <template>
-    <v-breadcrumbs :items="items">
+    <v-breadcrumbs :items="breadcrumbs">
         <template v-slot:item="props">
             <v-breadcrumbs-item
-                    :href="props.item.href"
+                    :to="props.item.to"
                     :class="[props.item.disabled && 'disabled']"
             >
-                {{ props.item.text.toUpperCase() }}
+                {{ props.item.text }}
             </v-breadcrumbs-item>
         </template>
     </v-breadcrumbs>
@@ -14,25 +14,25 @@
 <script>
     export default {
         name: "breadcrumb",
-        data: ()=>({
-            items: [
+        props: {
+            'items': {
+                default: function () {
+                    return [{}]
+                }
+            }
+        },
+        data: () => ({
+            breadcrumbs: [
                 {
                     text: 'Dashboard',
                     disabled: false,
-                    href: 'breadcrumbs_dashboard',
-                },
-                {
-                    text: 'Link 1',
-                    disabled: false,
-                    href: 'breadcrumbs_link_1',
-                },
-                {
-                    text: 'Link 2',
-                    disabled: true,
-                    href: 'breadcrumbs_link_2',
-                },
-            ],
-        })
+                    to: {name: 'dashboard'},
+                }
+            ]
+        }),
+        mounted() {
+            this.items.map(item=>this.breadcrumbs.push(item));
+        }
     }
 </script>
 
