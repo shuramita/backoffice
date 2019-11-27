@@ -81,12 +81,13 @@ class Navigator
                         return $this->buildItemByPermission($user, $item);
                     })->filter(function ($value, $key) {
                         return !empty($value);
-                    });
+                    })->values();
             }
             return $nav_item;
         })->filter(function ($value, $key) {
             return !empty($value) && ( isset($value['link']) || ( $value['hasSubItems'] && count($value['subItems']) > 0));
         });
+//        dd($items);
         return $items;
     }
     private function buildItem(User $user, Item $item)

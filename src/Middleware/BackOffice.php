@@ -16,8 +16,8 @@ class BackOffice
     public function handle($request, Closure $next)
     {
         $user = $request->user();
-        if(!$user || (!$user->isAdmin() && !$user->isManager() && !$user->isMaker()) ) {
-            return redirect('/');
+        if(!$user || (!$user->hasPermission('bo::read') ) ) {
+            return abort(403);
         }
         return $next($request);
     }

@@ -32,7 +32,7 @@
                     <v-list-group
                             v-if="item.hasSubItems"
                             no-action
-                            :prepend-icon="item.icon.mdi"
+                            :prepend-icon="item.icon && item.icon.mdi"
                             value="true"
                     >
                         <template v-slot:activator>

@@ -7,6 +7,7 @@ import Auth from './services/Auth'
 Vue.prototype.$event = new Vue();
 import dashboard from './components/dashboard'
 import Login from "./components/Login";
+
 Vue.use(VueRouter)
 const routes = [
     {path: '/backoffice', redirect: {name: 'dashboard'}},
@@ -19,9 +20,11 @@ const router = new VueRouter({
     mode: 'history'
 });
 const packagesRoutes = require.context('@root/packages/compiler/cache/routers', true, /^.*\.js$/);
-packagesRoutes.keys().map(key=>{
+packagesRoutes.keys().map(key => {
     router.addRoutes(packagesRoutes(key).default);
 })
+router.addRoutes([{path: "*", redirect: {name: 'dashboard'}}]);
+
 // console.log(packagesRoutes);
 Vue.config.productionTip = false;
 export default new Vue({

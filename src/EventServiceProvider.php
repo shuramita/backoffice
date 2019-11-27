@@ -2,8 +2,8 @@
 
 namespace Shura\BackOffice;
 
-use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Shura\BackOffice\Listeners\UpdatePermissionForBusinessUnitOwner;
 use Shura\BackOffice\Listeners\UpdatePermissionForOrganizationOwner;
 
 class EventServiceProvider extends ServiceProvider
@@ -16,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         'Core\Organization\Events\ModuleAdded' => [
             UpdatePermissionForOrganizationOwner::class
+        ],
+        'Core\Organization\Events\BusinessUnitAdded' => [
+            UpdatePermissionForBusinessUnitOwner::class
         ]
     ];
 

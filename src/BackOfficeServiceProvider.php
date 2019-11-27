@@ -1,12 +1,16 @@
 <?php
 namespace Shura\BackOffice;
 
+use Illuminate\Database\Eloquent\Factory as EloquentFactory;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Core\Admin\ViewComposers\Item;
+use Shura\BackOffice\Commands\Reset;
+use Shura\BackOffice\Commands\Uninstall;
+use Shura\BackOffice\Commands\Install;
 
 class BackOfficeServiceProvider extends ServiceProvider
 {
@@ -31,7 +35,15 @@ class BackOfficeServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/config/backoffice.php' => config_path('backoffice.php'),
         ]);
+        if ($this->app->runningInConsole()) {
+            $this->app->make(EloquentFactory::class)->load(__DIR__ . '/database/factories');
+            $this->commands([
+                Uninstall::class,
+                Install::class,
+                Reset::class
+            ]);
 
+        }
         $this->registerAdminNavigator();
     }
 
